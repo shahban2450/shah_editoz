@@ -1,2 +1,2 @@
-# shah_editoz
+# shaheditoz
 My All-in-One Digital Resource Hub
