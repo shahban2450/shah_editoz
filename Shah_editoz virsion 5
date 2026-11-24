@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080808">
+<title>SHAH EDITOZ — My Digital World</title>
+<style>
+:root{--bg:#080808;--panel:#121212;--panel2:#191919;--gold:#d7ad55;--gold2:#f4d58a;--text:#f5f1e8;--muted:#aaa397;--line:#332a19;--danger:#e46d6d}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -20%,#33250d 0,#080808 42%);color:var(--text);font-family:Arial,Helvetica,sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit}button{cursor:pointer}
+header{position:sticky;top:0;z-index:5;background:#090909ed;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:13px 5%;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-weight:900;letter-spacing:1.5px;color:var(--gold2);font-size:18px}.brand small{display:block;color:var(--muted);font-size:9px;letter-spacing:3px;margin-top:4px}
+nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.btn{border:1px solid var(--line);background:#17130b;color:var(--gold2);padding:10px 14px;border-radius:10px;font-weight:700}.btn.primary{background:linear-gradient(135deg,#f1d28b,#b7832c);color:#171006;border:0}.btn:hover{filter:brightness(1.12)}
+main{width:min(1160px,92%);margin:auto}.hero{text-align:center;padding:65px 12px 38px}.eyebrow{color:var(--gold);letter-spacing:4px;font-size:11px;font-weight:800}.hero h1{font-size:clamp(32px,7vw,66px);margin:15px 0 10px;line-height:1.05}.hero h1 span{color:var(--gold2)}.hero p{color:var(--muted);max-width:650px;margin:0 auto 22px;line-height:1.7}
+.search{display:flex;gap:8px;max-width:650px;margin:22px auto}.search input{flex:1;min-width:0}.field{width:100%;background:#0d0d0d;border:1px solid #42351e;border-radius:10px;padding:13px;color:white;outline:none}.field:focus{border-color:var(--gold)}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:32px 0 15px}.section-head h2{margin:0;font-size:22px}.section-head p{margin:5px 0 0;color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:13px}.category,.tool,.stat,.adminbox{background:linear-gradient(145deg,#191919,#0f0f0f);border:1px solid var(--line);border-radius:15px;padding:17px;transition:.2s}.category:hover,.tool:hover{transform:translateY(-3px);border-color:#a9823d}.category .emoji{font-size:25px}.category h3{font-size:15px;margin:12px 0 5px}.category p,.tool p{font-size:12px;color:var(--muted);line-height:1.5;margin:0}.category .count{font-size:11px;color:var(--gold);margin-top:12px}
+.tool{display:flex;flex-direction:column;gap:10px}.tool h3{margin:0;font-size:16px}.tool .tag{font-size:10px;color:var(--gold);letter-spacing:1px}.tool .actions{margin-top:auto;display:flex;gap:8px;padding-top:8px}.tool .actions a{font-size:12px}
+.page-title{padding:34px 0 8px}.page-title h1{margin:0;color:var(--gold2)}.page-title p{color:var(--muted)}
+.hidden{display:none!important}.muted{color:var(--muted)}.notice{padding:13px;border:1px solid var(--line);border-radius:10px;color:var(--muted);font-size:13px;margin:15px 0;line-height:1.5}
+footer{text-align:center;padding:45px 12px 25px;color:#847b6b;font-size:12px}
+.modal{position:fixed;inset:0;background:#000b;z-index:10;display:grid;place-items:center;padding:15px}.modal-card{width:min(480px,100%);background:#141414;border:1px solid #594522;border-radius:17px;padding:22px;max-height:90vh;overflow:auto}.modal-card h2{margin-top:0;color:var(--gold2)}.stack{display:grid;gap:11px}.row{display:flex;gap:9px;flex-wrap:wrap;align-items:center}.row>*{flex:1}.admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px}.stat strong{display:block;color:var(--gold2);font-size:27px;margin-top:8px}.stat span{font-size:12px;color:var(--muted)}
+hr{border:0;border-top:1px solid var(--line);margin:20px 0}
+@media(max-width:600px){header{align-items:flex-start;flex-direction:column}.hero{padding-top:43px}.section-head{align-items:flex-start;flex-direction:column}.search{flex-direction:column}.search .btn{width:100%}}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="#home">SHAH EDITOZ <small>MY DIGITAL WORLD</small></a>
+  <nav>
+    <a class="btn" href="#home">Home</a>
+    <a class="btn" href="#categories">Categories</a>
+    <button class="btn" id="loginOpen">Admin Login</button>
+  </nav>
+</header>
+<main>
+<section id="homeView">
+  <div class="hero">
+    <div class="eyebrow">WELCOME TO YOUR DIGITAL UNIVERSE</div>
+    <h1>MY DIGITAL WORLD<br><span>APPS & AI WEBSITES</span></h1>
+    <p>Discover useful AI tools, creative apps, editing resources and digital websites — all in one place.</p>
+    <div class="search"><input class="field" id="searchInput" placeholder="Search apps, AI tools and websites..."><button class="btn primary" id="searchBtn">Search</button></div>
+  </div>
+  <div class="section-head"><div><h2>Explore Categories</h2><p>Choose a category to open its dedicated page</p></div></div>
+  <div class="grid" id="categoryGrid"></div>
+  <div class="section-head"><div><h2>Featured Resources</h2><p>Popular tools to get started</p></div></div>
+  <div class="grid" id="featuredGrid"></div>
+</section>
+<section id="categoryView" class="hidden">
+  <div class="page-title"><a class="muted" href="#categories">← All categories</a><h1 id="categoryTitle"></h1><p id="categoryDescription"></p></div>
+  <div class="search"><input class="field" id="categorySearch" placeholder="Search in this category..."></div>
+  <div class="grid" id="categoryTools"></div>
+</section>
+<section id="searchView" class="hidden">
+  <div class="page-title"><h1>Search Results</h1><p id="searchSummary"></p></div><div class="grid" id="searchResults"></div>
+</section>
+<section id="adminView" class="hidden">
+  <div class="page-title"><h1>Admin Dashboard</h1><p>Manage resources stored in your Firebase Cloud Firestore database.</p></div>
+  <div class="admin-grid">
+    <div class="stat"><span>Total resources</span><strong id="totalCount">0</strong></div>
+    <div class="stat"><span>Active resources</span><strong id="activeCount">0</strong></div>
+    <div class="stat"><span>Categories</span><strong>22</strong></div>
+  </div>
+  <div class="adminbox" style="margin-top:16px">
+    <h2 style="color:var(--gold2)">Add a new resource</h2>
+    <form id="addToolForm" class="stack">
+      <input class="field" id="toolName" placeholder="Tool / website name" required>
+      <select class="field" id="toolCategory" required></select>
+      <input class="field" id="toolUrl" type="url" placeholder="Official website URL (https://...)" required>
+      <textarea class="field" id="toolDescription" rows="3" placeholder="Short description"></textarea>
+      <label class="muted"><input type="checkbox" id="toolActive" checked> Visible to visitors</label>
+      <button class="btn primary" type="submit">Save resource to cloud</button>
+    </form>
+  </div>
+  <div class="section-head"><div><h2>Manage Resources</h2><p>Only signed-in admin can add or delete entries</p></div><button class="btn" id="logoutBtn">Log out</button></div>
+  <div id="adminTools" class="grid"></div>
+  <div class="notice" id="adminMessage">Admin tools load after successful Firebase connection.</div>
+</section>
+</main>
+<footer>© 2026 SHAH EDITOZ · MY DIGITAL WORLD — APPS & AI WEBSITES</footer>
+
+<div class="modal hidden" id="loginModal">
+ <div class="modal-card">
+  <div class="row"><h2>Admin Login</h2><button class="btn" id="loginClose" style="flex:0 0 auto">✕</button></div>
+  <form id="loginForm" class="stack">
+   <input class="field" id="loginEmail" type="email" placeholder="Admin email" required>
+   <input class="field" id="loginPassword" type="password" placeholder="Password" required>
+   <button class="btn primary" type="submit">Sign in securely</button>
+  </form>
+  <button class="btn" id="googleLogin" style="width:100%;margin-top:10px">Continue with Google</button>
+  <p class="notice">This login uses Firebase Authentication. Never share your password or admin UID.</p>
+  <div id="loginMessage" class="muted"></div>
+ </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+// STEP 1: Replace the values below with your own Firebase web-app config from Firebase Console.
+// Keep the config private in your editor; do not post it in chat or screenshots.
+const firebaseConfig = {
+  apiKey: "PASTE_YOUR_FIREBASE_API_KEY",
+  authDomain: "PASTE_YOUR_PROJECT.firebaseapp.com",
+  projectId: "PASTE_YOUR_PROJECT_ID",
+  storageBucket: "PASTE_YOUR_STORAGE_BUCKET",
+  messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID",
+  appId: "PASTE_YOUR_APP_ID"
+};
+// STEP 2: Paste your admin user's Authentication UID between the quotes below.
+// Do not use an email address or password here.
+const ADMIN_UID = "PASTE_YOUR_ADMIN_UID";
+
+const categories = [
+ ["video-editing","🎬","Video Editing Apps","Mobile and desktop video editing applications."],
+ ["photo-editing","📸","Photo Editing Apps","Photo retouching, filters and image enhancement."],
+ ["graphic-design","🎨","Graphic Designing Apps","Design posters, logos, thumbnails and graphics."],
+ ["online-video-editing","🌐","Online Video Editing Websites","Edit videos directly in your browser."],
+ ["audio-editing","🎧","Audio Editing Apps","Record, edit and enhance audio."],
+ ["ai-chatbots","🤖","AI Chatbot Apps","AI assistants for questions and everyday tasks."],
+ ["ai-writing","✍️","AI Writing Apps","Writing, rewriting and content helpers."],
+ ["ai-image","🖼️","AI Image Generator Apps","Create images from text prompts."],
+ ["ai-video","🎞️","AI Video Generator Apps","AI-powered video creation tools."],
+ ["ai-voice","🎙️","AI Voice Generator Apps","Text-to-speech and voice tools."],
+ ["ai-presentations","📊","AI Presentation Maker Apps","Create slides and presentations."],
+ ["ai-study","📚","AI Study & Education Apps","Learning, revision and study helpers."],
+ ["background-remover","✂️","AI Background Remover Apps","Remove and change image backgrounds."],
+ ["logo-maker","🔰","AI Logo Maker Apps","Create brand marks and logo concepts."],
+ ["website-builders","🧩","AI Website Builders","Build websites with visual and AI tools."],
+ ["ai-coding","💻","AI Coding Apps","Coding assistants and developer tools."],
+ ["translation","🌍","AI Translation Apps","Translate text and understand languages."],
+ ["ai-music","🎵","AI Music Generator Apps","Explore AI music creation tools."],
+ ["social-media","📱","AI Social Media Tools","Plan and create social content."],
+ ["productivity-research","⚡","AI Productivity & Research Tools","Organize work and explore information."],
+ ["pdf-documents","📄","PDF & Document Editing Apps","Work with PDFs and documents."],
+ ["animation-3d","🧊","Animation & 3D Editing Apps","Animation, 3D and motion design tools."]
+];
+
+const starterTools = [
+ {name:"ChatGPT",category:"ai-chatbots",url:"https://chatgpt.com/",description:"AI assistant for learning, writing and planning."},
+ {name:"Google Gemini",category:"ai-chatbots",url:"https://gemini.google.com/",description:"Google's AI assistant."},
+ {name:"Microsoft Copilot",category:"ai-chatbots",url:"https://copilot.microsoft.com/",description:"AI assistant from Microsoft."},
+ {name:"Canva",category:"graphic-design",url:"https://www.canva.com/",description:"Create graphics, presentations and social posts."},
+ {name:"Adobe Express",category:"graphic-design",url:"https://www.adobe.com/express/",description:"Quick creative designs and content."},
+ {name:"CapCut",category:"video-editing",url:"https://www.capcut.com/",description:"Video editing tools for creators."},
+ {name:"VN Video Editor",category:"video-editing",url:"https://www.vlognow.me/",description:"Mobile video editing application."},
+ {name:"DaVinci Resolve",category:"video-editing",url:"https://www.blackmagicdesign.com/products/davinciresolve",description:"Professional video editing and color tools."},
+ {name:"Photopea",category:"photo-editing",url:"https://www.photopea.com/",description:"Browser-based image editor."},
+ {name:"Pixlr",category:"photo-editing",url:"https://pixlr.com/",description:"Online photo editing tools."},
+ {name:"Remove.bg",category:"background-remover",url:"https://www.remove.bg/",description:"Remove image backgrounds online."},
+ {name:"Runway",category:"ai-video",url:"https://runwayml.com/",description:"AI-powered creative video tools."},
+ {name:"Pika",category:"ai-video",url:"https://pika.art/",description:"AI video creation platform."},
+ {name:"ElevenLabs",category:"ai-voice",url:"https://elevenlabs.io/",description:"AI voice and text-to-speech tools."},
+ {name:"Suno",category:"ai-music",url:"https://suno.com/",description:"AI music creation platform."},
+ {name:"Gamma",category:"ai-presentations",url:"https://gamma.app/",description:"Create presentations and visual documents."},
+ {name:"Khan Academy",category:"ai-study",url:"https://www.khanacademy.org/",description:"Free learning resources."},
+ {name:"Duolingo",category:"ai-study",url:"https://www.duolingo.com/",description:"Language learning platform."},
+ {name:"Wix",category:"website-builders",url:"https://www.wix.com/",description:"Website builder with AI features."},
+ {name:"Framer",category:"website-builders",url:"https://www.framer.com/",description:"Visual website design and publishing."},
+ {name:"Replit",category:"ai-coding",url:"https://replit.com/",description:"Online coding and app-building workspace."},
+ {name:"DeepL",category:"translation",url:"https://www.deepl.com/translator",description:"AI-powered translation."},
+ {name:"Notion",category:"productivity-research",url:"https://www.notion.so/",description:"Notes, projects and knowledge workspace."},
+ {name:"Trello",category:"productivity-research",url:"https://trello.com/",description:"Organize projects and tasks."},
+ {name:"Smallpdf",category:"pdf-documents",url:"https://smallpdf.com/",description:"Online PDF tools."},
+ {name:"Audacity",category:"audio-editing",url:"https://www.audacityteam.org/",description:"Audio recording and editing software."},
+ {name:"Blender",category:"animation-3d",url:"https://www.blender.org/",description:"Free 3D creation suite."},
+ {name:"Looka",category:"logo-maker",url:"https://looka.com/",description:"Logo and brand design platform."},
+ {name:"Buffer",category:"social-media",url:"https://buffer.com/",description:"Social media publishing and planning."},
+ {name:"VEED",category:"online-video-editing",url:"https://www.veed.io/",description:"Online video editing platform."}
+];
+
+let db=null, auth=null, currentUser=null, cloudTools=[], firebaseReady=false;
+const $=id=>document.getElementById(id);
+const safeText=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const categoryById=id=>categories.find(c=>c[0]===id);
+function toolCard(t,admin=false){
+ const cat=categoryById(t.category); const name=safeText(t.name), desc=safeText(t.description||"");
+ let url="#"; try{const u=new URL(t.url);if(["https:","http:"].includes(u.protocol))url=u.href;}catch(e){}
+ return `<article class="tool"><div class="tag">${cat?safeText(cat[2]):"DIGITAL RESOURCE"}</div><h3>${name}</h3><p>${desc}</p><div class="actions"><a class="btn primary" href="${safeText(url)}" target="_blank" rel="noopener noreferrer">Visit website ↗</a>${admin&&t.id?`<button class="btn deleteTool" data-id="${safeText(t.id)}">Delete</button>`:""}</div></article>`;
+}
+function renderCategories(){
+ $("categoryGrid").innerHTML=categories.map(c=>`<a class="category" href="#category/${c[0]}"><div class="emoji">${c[1]}</div><h3>${safeText(c[2])}</h3><p>${safeText(c[3])}</p><div class="count">OPEN CATEGORY →</div></a>`).join("");
+ $("toolCategory").innerHTML=categories.map(c=>`<option value="${c[0]}">${safeText(c[2])}</option>`).join("");
+}
+function visibleTools(){return cloudTools.filter(t=>t.active===true)}
+function renderFeatured(){
+ const list=visibleTools().slice(0,8);
+ $("featuredGrid").innerHTML=list.length?list.map(t=>toolCard(t)).join():'<div class="notice">Connect Firebase and add active resources to display them here.</div>';
+}
+function showView(name){
+ ["homeView","categoryView","searchView","adminView"].forEach(id=>$(id).classList.add("hidden"));
+ $(name).classList.remove("hidden");
+}
+function route(){
+ const hash=location.hash||"#home";
+ if(hash.startsWith("#category/")){
+  const id=hash.split("/")[1], c=categoryById(id); showView("categoryView");
+  if(!c){$("categoryTitle").textContent="Category not found";$("categoryDescription").textContent="Choose another category.";return;}
+  $("categoryTitle").textContent=c[2];$("categoryDescription").textContent=c[3];renderCategoryTools(id,"");
+ }else if(hash==="#categories"||hash==="#home"){showView("homeView");}
+ else if(hash==="#admin"){if(currentUser&&currentUser.uid===ADMIN_UID){showView("adminView");renderAdmin();}else{showView("homeView");$("loginModal").classList.remove("hidden");}}
+ else if(hash.startsWith("#search/")){showView("searchView");const q=decodeURIComponent(hash.slice(8)).toLowerCase();$("searchSummary").textContent=`Results for “${q}”`;const found=visibleTools().filter(t=>(t.name+" "+t.description+" "+(categoryById(t.category)?.[2]||"")).toLowerCase().includes(q));$("searchResults").innerHTML=found.length?found.map(t=>toolCard(t)).join():'<div class="notice">No matching resources found.</div>';}
+ else showView("homeView");
+}
+function renderCategoryTools(id,q){const list=visibleTools().filter(t=>t.category===id&&(`${t.name} ${t.description||""}`).toLowerCase().includes(q.toLowerCase()));$("categoryTools").innerHTML=list.length?list.map(t=>toolCard(t)).join():'<div class="notice">No active resources in this category yet. Check back soon.</div>';}
+function renderAdmin(){
+ $("totalCount").textContent=cloudTools.length;$("activeCount").textContent=visibleTools().length;
+ $("adminTools").innerHTML=cloudTools.length?cloudTools.map(t=>toolCard(t,true)).join():'<div class="notice">No resources in Firestore yet.</div>';
+ document.querySelectorAll(".deleteTool").forEach(b=>b.addEventListener("click",()=>deleteTool(b.dataset.id)));
+}
+async function loadTools(){
+ if(!db)return;
+ try{const snap=await db.collection("tools").get();cloudTools=snap.docs.map(d=>({id:d.id,...d.data()}));renderFeatured();if(location.hash.startsWith("#category/"))route();if(currentUser&&currentUser.uid===ADMIN_UID)renderAdmin();}
+ catch(e){console.error(e);$("adminMessage").textContent="Could not load resources. Check Firestore rules and Firebase setup.";}
+}
+function setMessage(msg){$("loginMessage").textContent=msg;}
+function setupFirebase(){
+ if(!firebaseConfig.apiKey.startsWith("AIza")||firebaseConfig.projectId.startsWith("PASTE_")||ADMIN_UID.startsWith("PASTE_")){
+  $("adminMessage").textContent="Setup needed: add your Firebase web config and admin UID in this file. Public demo layout is ready.";
+  cloudTools=starterTools.map((t,i)=>({...t,id:"demo"+i,active:true}));renderFeatured();return;
+ }
+ try{
+  firebase.initializeApp(firebaseConfig);auth=firebase.auth();db=firebase.firestore();firebaseReady=true;
+  auth.onAuthStateChanged(async user=>{currentUser=user;if(user&&user.uid===ADMIN_UID){$("loginOpen").textContent="Admin Dashboard";await loadTools();}else{$("loginOpen").textContent="Admin Login";}if(user&&user.uid!==ADMIN_UID){await auth.signOut();setMessage("This account is not an authorized admin.");}if(location.hash==="#admin")route();});
+  loadTools();
+ }catch(e){console.error(e);$("adminMessage").textContent="Firebase setup error. Check the config values in this file.";}
+}
+$("loginOpen").addEventListener("click",()=>{if(currentUser&&currentUser.uid===ADMIN_UID){location.hash="#admin";}else{$("loginModal").classList.remove("hidden");}});
+$("loginClose").addEventListener("click",()=>$("loginModal").classList.add("hidden"));
+$("loginForm").addEventListener("submit",async e=>{e.preventDefault();if(!auth){setMessage("Firebase setup is not complete yet.");return;}try{await auth.signInWithEmailAndPassword($("loginEmail").value,$("loginPassword").value);$("loginModal").classList.add("hidden");location.hash="#admin";}catch(err){setMessage("Login failed. Check your email/password and Firebase Authentication settings.");}});
+$("googleLogin").addEventListener("click",async()=>{if(!auth){setMessage("Firebase setup is not complete yet.");return;}try{await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());$("loginModal").classList.add("hidden");location.hash="#admin";}catch(e){setMessage("Google sign-in could not complete. Check Authorized domains and Google provider settings.");}});
+$("logoutBtn").addEventListener("click",async()=>{if(auth)await auth.signOut();location.hash="#home";});
+$("searchBtn").addEventListener("click",()=>{const q=$("searchInput").value.trim();if(q)location.hash="#search/"+encodeURIComponent(q);});
+$("searchInput").addEventListener("keydown",e=>{if(e.key==="Enter")$("searchBtn").click();});
+$("categorySearch").addEventListener("input",()=>{const id=(location.hash.split("/")[1]||"");renderCategoryTools(id,$("categorySearch").value);});
+$("addToolForm").addEventListener("submit",async e=>{
+ e.preventDefault();if(!db||!currentUser||currentUser.uid!==ADMIN_UID){$("adminMessage").textContent="Admin access required.";return;}
+ const data={name:$("toolName").value.trim(),category:$("toolCategory").value,url:$("toolUrl").value.trim(),description:$("toolDescription").value.trim(),active:$("toolActive").checked,createdAt:firebase.firestore.FieldValue.serverTimestamp()};
+ try{await db.collection("tools").add(data);e.target.reset();$("toolActive").checked=true;$("adminMessage").textContent="Resource saved to cloud successfully.";await loadTools();}
+ catch(err){$("adminMessage").textContent="Save failed. Check your Firestore security rules.";console.error(err);}
+});
+async function deleteTool(id){if(!db||!currentUser||currentUser.uid!==ADMIN_UID)return;if(!confirm("Delete this resource from the cloud?"))return;try{await db.collection("tools").doc(id).delete();await loadTools();}catch(e){$("adminMessage").textContent="Delete failed. Check Firestore rules.";}}
+renderCategories();setupFirebase();window.addEventListener("hashchange",route);route();
+</script>
+</body>
+</html>
